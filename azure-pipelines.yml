@@ -7,24 +7,21 @@ trigger:
 - master
 
 pool:
-  vmImage: ubuntu-latest
+  vmImage: 'Ubuntu-16.04'
 
 variables:
   LT_USERNAME: 'ritamg'
   LT_ACCESS_KEY: 'e4vXxk64hYOIkG7gwld5Fsb5LpmhI8wq6J0LQ2KC9LSgJHc1N5'
 
 steps:
-- task: UsePythonVersion@0
+- task: NodeTool@0
   inputs:
-    versionSpec: '$(python.version)'
-  displayName: 'Use Python $(python.version)'
+    versionSpec: '14.x'
+  displayName: 'TASK | Install Node.js 14.x '
 
 - script: |
-    python -m pip install --upgrade pip
-    pip install -r requirements.txt
-  displayName: 'Install dependencies'
-
-- script: |
-    pip install pytest pytest-azurepipelines
-    pytest
-  displayName: 'pytest'
+    npm install
+    npm install -g protractor
+    cd conf
+    protractor single.conf.js
+  displayName: 'npm install and build'
