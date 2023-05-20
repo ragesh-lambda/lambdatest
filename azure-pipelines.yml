@@ -7,11 +7,22 @@ trigger:
 - master
 
 pool:
-  vmImage: ubuntu-latest
+  vmImage: 'Ubuntu-latest'
 
 variables:
   LT_USERNAME: 'ritamg'
   LT_ACCESS_KEY: 'e4vXxk64hYOIkG7gwld5Fsb5LpmhI8wq6J0LQ2KC9LSgJHc1N5'
+
+strategy:
+  matrix:
+    Python27:
+      python.version: '2.7'
+    Python35:
+      python.version: '3.5'
+    Python36:
+      python.version: '3.6'
+    Python37:
+      python.version: '3.7'
 
 steps:
 - task: UsePythonVersion@0
