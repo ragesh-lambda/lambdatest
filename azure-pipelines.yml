@@ -14,14 +14,17 @@ variables:
   LT_ACCESS_KEY: 'e4vXxk64hYOIkG7gwld5Fsb5LpmhI8wq6J0LQ2KC9LSgJHc1N5'
 
 steps:
-- task: NodeTool@0
+- task: UsePythonVersion@0
   inputs:
-    versionSpec: '14.x'
-  displayName: 'Install Node.js'
+    versionSpec: '$(python.version)'
+  displayName: 'Use Python $(python.version)'
 
 - script: |
-    npm install
-    npm install -g protractor
-    cd conf
-    protractor single.conf.js
-  displayName: 'npm install and build'
+    python -m pip install --upgrade pip
+    pip install -r requirements.txt
+  displayName: 'Install dependencies'
+
+- script: |
+    pip install pytest pytest-azurepipelines
+    pytest
+  displayName: 'pytest'
