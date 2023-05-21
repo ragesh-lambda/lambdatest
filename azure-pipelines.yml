@@ -1,34 +1,22 @@
-# Node.js
-# Build a general Node.js project with npm.
-# Add steps that analyze code, save build artifacts, deploy, and more:
-# https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
-
 trigger:
-- master
+  branches:
+    include:
+      - main  # Modify this to match the branch you want to trigger the pipeline on
 
 pool:
-  vmImage: 'Ubuntu-latest'
-
-variables:
-  LT_USERNAME: 'ritamg'
-  LT_ACCESS_KEY: 'e4vXxk64hYOIkG7gwld5Fsb5LpmhI8wq6J0LQ2KC9LSgJHc1N5'
-
-strategy:
-  matrix:
-    Python37:
-      python.version: '3.7'
+  vmImage: 'ubuntu-latest'  # Modify this based on the agent pool you want to use
 
 steps:
-- task: UsePythonVersion@0
-  inputs:
-    versionSpec: '$(python.version)'
-  displayName: 'Use Python $(python.version)'
+  - script: |
+      python -m pip install --upgrade pip
+      pip install -r requirements.txt
+    displayName: 'Install dependencies'
 
-- script: |
-    python -m pip install --upgrade pip
-    pip install -r requirements.txt
-  displayName: 'Install dependencies'
+  - task: UsePythonVersion@0
+    inputs:
+      versionSpec: ''  # Modify this to match the Python version you want to use
+      addToPath: true
 
-- script: |
-    python test_firstest.py
-  displayName: 'Run Selenium script'
+  - script: |
+      python test_firstest.py
+    displayName: 'Run Selenium script'
