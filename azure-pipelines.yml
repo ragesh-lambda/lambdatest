@@ -1,27 +1,40 @@
-trigger:
-  branches:
-    include:
-      - main  # Modify this to match the branch you want to trigger the pipeline on
+name: Python application
 
-pool:
-  vmImage: 'ubuntu-latest'  # Modify this based on the agent pool you want to use
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
 
-variables:
-  LT_USERNAME: 'ritamg'
-  LT_ACCESS_KEY: 'e4vXxk64hYOIkG7gwld5Fsb5LpmhI8wq6J0LQ2KC9LSgJHc1N5'
+permissions:
+  contents: read
 
-steps:
-  - script: |
-      python -m pip install --upgrade pip
-      pip install selenium
-      pip install webdriver_manager
-    displayName: 'Install dependencies'
+jobs:
+  build:
+    runs-on: ubuntu-latest
 
-  - task: UsePythonVersion@0
-    inputs:
-      versionSpec: '3.x'  # Modify this to match the Python version you want to use
-      addToPath: true
+    steps:
+    - uses: actions/checkout@v3
 
-  - script: |
-      python test_firstest.py
-    displayName: 'Run Selenium script'
+    - name: Set up Python 3.11
+      uses: actions/setup-python@v3
+      with:
+        python-version: "3.11"
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install flake8 pytest
+        pip install selenium
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
+    - name: Lint with flake8
+      run: |
+        # Stop the build if there are Python syntax errors or undefined names
+        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+        # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
+        flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+
+    - name: Test with pytest
+      run: |
+        pytest
