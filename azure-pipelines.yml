@@ -6,6 +6,10 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'  # Modify this based on the agent pool you want to use
 
+variables:
+  LT_USERNAME: 'ritamg'
+  LT_ACCESS_KEY: 'e4vXxk64hYOIkG7gwld5Fsb5LpmhI8wq6J0LQ2KC9LSgJHc1N5'
+
 steps:
   - script: |
       python -m pip install --upgrade pip
