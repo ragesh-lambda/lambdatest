@@ -14,7 +14,7 @@ steps:
 
   - task: UsePythonVersion@0
     inputs:
-      versionSpec: ''  # Modify this to match the Python version you want to use
+      versionSpec: '3.x'  # Modify this to match the Python version you want to use
       addToPath: true
 
   - script: |
