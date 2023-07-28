@@ -38,7 +38,6 @@ class FirstSampleTest(unittest.TestCase):
 
     # setUp runs before each test case
     def setUp(self):
-        build_name = os.getenv("LT_BUILD_NAME")
         lt_options = {
             "user": username,
             "accessKey": access_key,
