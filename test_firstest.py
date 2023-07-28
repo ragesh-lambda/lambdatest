@@ -42,7 +42,7 @@ class FirstSampleTest(unittest.TestCase):
         lt_options = {
             "user": username,
             "accessKey": access_key,
-            "build":build_name
+            "build":build_name,
             "name": "UnitTest-Selenium-Test",
             "platformName": "Windows 11",
             "w3c": True,
