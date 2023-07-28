@@ -34,7 +34,7 @@ class FirstSampleTest(unittest.TestCase):
         # Note: for additional capabilities navigate to https://www.lambdatest.com/support/docs/test-settings-options/
 
         self.driver = webdriver.Remote(
-            command_executor="http://{}:{}@hub.lambdatest.com/wd/hub".format(
+            command_executor="http://ritamg:lHWNSA0QECwjeN8DoDb9U6KyXMBgAFXqlIIArkxeOTDSeEdLyG@hub.lambdatest.com/wd/hub".format(
                 username, access_key),
             desired_capabilities=desired_caps)
 
