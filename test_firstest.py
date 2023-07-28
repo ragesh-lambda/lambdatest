@@ -20,9 +20,9 @@ import os
     Execute Test on lambdatest Distributed Grid perform selenium automation based 
 """
 # username: Username can be found at automation dashboard
-username ="ritamg@lambdatest.com"
+username ="ritamg"
 # accessToken:  AccessToken can be genarated from automation dashboard or profile section
-accessToken ="e4vXxk64hYOIkG7gwld5Fsb5LpmhI8wq6J0LQ2KC9LSgJHc1N5"
+accessToken ="lHWNSA0QECwjeN8DoDb9U6KyXMBgAFXqlIIArkxeOTDSeEdLyG"
 # gridUrl: gridUrl can be found at automation dashboard
 gridUrl = "hub.lambdatest.com/wd/hub"
 passs="Shiva@12"
