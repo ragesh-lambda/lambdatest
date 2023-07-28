@@ -1,127 +1,93 @@
-# google-search-lambdatest.py
 
-import time
-from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.chrome.options import Options
-from webdriver_manager.chrome import ChromeDriverManager
+import unittest
 import os
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+
+username ="ritamg" # Replace the username
+access_key ="lHWNSA0QECwjeN8DoDb9U6KyXMBgAFXqlIIArkxeOTDSeEdLyG"  # Replace the access key
 
 
-"""
-    LambdaTest selenium automation sample example
-    Configuration
-    ----------
-    username: Username can be found at automation dashboard
-    accessToken:  AccessToken can be genarated from automation dashboard or profile section
+class FirstSampleTest(unittest.TestCase):
+    # Generate capabilites from here: https://www.lambdatest.com/capabilities-generator/
+    # setUp runs before each test case and
+    def setUp(self):
+        desired_caps = {
+            'LT:Options': {
+                "build": "Python Demo",  # Change your build name here
+                "name": "Python Demo Test",  # Change your test name here
+                "platformName": "Windows 11",
+                "selenium_version": "4.0.0",
+                "console": 'true',  # Enable or disable console logs
+                "network": 'true',  # Enable or disable network logs
+                #Enable Smart UI Project
+                #"smartUI.project": "<Project Name>"
+            },
+            "browserName": "firefox",
+            "browserVersion": "latest",
+        }
 
-    Result
-    -------
-    Execute Test on lambdatest Distributed Grid perform selenium automation based 
-"""
-# username: Username can be found at automation dashboard
-username ="ritamg"
-# accessToken:  AccessToken can be genarated from automation dashboard or profile section
-accessToken ="lHWNSA0QECwjeN8DoDb9U6KyXMBgAFXqlIIArkxeOTDSeEdLyG"
-# gridUrl: gridUrl can be found at automation dashboard
-gridUrl = "hub.lambdatest.com/wd/hub"
-passs="Shiva@12"
+        # Steps to run Smart UI project (https://beta-smartui.lambdatest.com/)
+        # Step - 1 : Change the hub URL to @beta-smartui-hub.lambdatest.com/wd/hub
+        # Step - 2 : Add "smartUI.project": "<Project Name>" as a capability above
+        # Step - 3 : Run "driver.execute_script("smartui.takeScreenshot")" command wherever you need to take a screenshot 
+        # Note: for additional capabilities navigate to https://www.lambdatest.com/support/docs/test-settings-options/
 
+        self.driver = webdriver.Remote(
+            command_executor="http://{}:{}@hub.lambdatest.com/wd/hub".format(
+                username, access_key),
+            desired_capabilities=desired_caps)
 
-capabilities = {
-    'browserName': 'Chrome',
-    'browserVersion': 'latest',
-    'platformName': 'Windows 10',
-    'moz:firefoxOptions': {
-        'args': [],
-        'prefs': {}
-    },
-    'LT:Options': {
-        'visual': True,
-        'video': True,
-        'project': 'Untitled',
-        'w3c': True,
-        'plugin': 'python-python',
-        "console":"warn",
-        "smartUI.project":"Ritam Projects",
-        "headless":True,
-        "seCdp":True
-    }
-}
-
-url = "https://"+username+":"+accessToken+"@"+gridUrl
-
-# username: Username can be found at automation dashboard
-# username = os.getenv("LT_USERNAME")
-# accessToken:  AccessToken can be genarated from automation dashboard or profile section
-# accessToken = os.getenv("LT_ACCESS_KEY")
-# gridUrl: gridUrl can be found at automation dashboard
-# gridUrl = "hub.lambdatest.com/wd/hub"
-# passs="Shiva@12"
-
-os.environ["SELENIUM_SERVER_JAR"] = "selenium-server-standalone-2.41.0.jar"
+# tearDown runs after each test case
 
 
-# capabilities = {
-#     'browserName': 'firefox',
-#     'browserVersion': 'latest',
-#     'platformName': 'Windows 10',
-#     'moz:firefoxOptions': {
-#         'args': [],
-#         'prefs': {}
-#     },
-#     'LT:Options': {
-#         'username': 'ritamg',
-#         'accessKey': 'e4vXxk64hYOIkG7gwld5Fsb5LpmhI8wq6J0LQ2KC9LSgJHc1N5',
-#         'visual': True,
-#         'video': True,
-#         'project': 'Untitled',
-#         'w3c': True,
-#         'plugin': 'python-python'
-#     }
-# }
+    def tearDown(self):
+        self.driver.quit()
 
-#url = "https://"+username+":"+accessToken+"@"+gridUrl
+    # """ You can write the test cases here """
+    def test_demo_site(self):
+
+        # try:
+        driver = self.driver
+        driver.implicitly_wait(10)
+        driver.set_page_load_timeout(30)
+        driver.set_window_size(1920, 1080)
+
+        # Url
+        print('Loading URL')
+        driver.get("https://stage-lambda-devops-use-only.lambdatestinternal.com/To-do-app/index.html")
+
+        # Let's click on a element
+        driver.find_element(By.NAME, "li1").click()
+        location = driver.find_element(By.NAME, "li2")
+        location.click()
+        print("Clicked on the second element")
+
+        #Take Smart UI screenshot
+        #driver.execute_script("smartui.takeScreenshot")
+
+        # Let's add a checkbox
+        driver.find_element(By.ID, "sampletodotext").send_keys("LambdaTest")
+        add_button = driver.find_element(By.ID, "addbutton")
+        add_button.click()
+        print("Added LambdaTest checkbox")
+
+        # print the heading
+        search = driver.find_element(By.CSS_SELECTOR, ".container h2")
+        assert search.is_displayed(), "heading is not displayed"
+        print(search.text)
+        search.click()
+        driver.implicitly_wait(3)
+
+        # Let's download the invoice
+        heading = driver.find_element(By.CSS_SELECTOR, ".container h2")
+        if heading.is_displayed():
+            heading.click()
+            driver.execute_script("lambda-status=passed")
+            print("Tests are run successfully!")
+        else:
+            driver.execute_script("lambda-status=failed")
 
 
-"""
-    ----------
-    platformName : Supported platfrom - (Windows 10, Windows 8.1, Windows 8, Windows 7,  macOS High Sierra, macOS Sierra, OS X El Capitan, OS X Yosemite, OS X Mavericks)
-    browserName : Supported platfrom - (chrome, firefox, Internet Explorer, MicrosoftEdge)
-    browserVersion :  Supported list of version can be found at https://www.lambdatest.com/capabilities-generator/
-
-    Result
-    -------
-"""
-
-driver = webdriver.Remote(
-    command_executor=url,
-    desired_capabilities=capabilities
-
-)
-
-"""
-    ----------
-    Execute test:  navigate google.com search LambdaTest
-    Result
-    ----------
-    print title
-"""
-
-driver.get("https://accounts.lambdatest.com/login")
-driver.find_element("id","email").send_keys(username)
-driver.find_element("id","password").send_keys(passs)
-#driver.find_element("id","login-button").click()
-elem = driver.find_element("id","email")
-elem.send_keys("https://accounts.lambdatest.com/login")
-elem.submit()
-driver.find_element("id","login-button").click()
-
-print("Printing title of current page :"+driver.title)
-driver.execute_script("lambda-status=passed")
-print("Requesting to mark test : pass")
-
-"""
-    Quit selenium driver
-"""
-driver.quit()
+if __name__ == "__main__":
+    unittest.main()
