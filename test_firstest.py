@@ -43,7 +43,7 @@ class FirstSampleTest(unittest.TestCase):
             "user": username,
             "accessKey": access_key,
             "name": "UnitTest-Selenium-Test",
-            build_name = os.getenv("LT_BUILD_NAME"),
+            "build_name":os.getenv("LT_BUILD_NAME"),
             "platformName": "Windows 11",
             "w3c": True,
             "browserName": "Chrome",
