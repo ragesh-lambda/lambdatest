@@ -29,7 +29,7 @@ passs="Shiva@12"
 
 
 capabilities = {
-    'browserName': 'firefox',
+    'browserName': 'Chrome',
     'browserVersion': 'latest',
     'platformName': 'Windows 10',
     'moz:firefoxOptions': {
