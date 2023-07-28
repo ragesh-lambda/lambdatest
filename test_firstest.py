@@ -38,10 +38,10 @@ class FirstSampleTest(unittest.TestCase):
 
     # setUp runs before each test case
     def setUp(self):
-        build_name = os.getenv("LT_BUILD_NAME")
         lt_options = {
             "user": username,
             "accessKey": access_key,
+            "build":os.getenv("LT_BUILD_NAME"),
             "name": "UnitTest-Selenium-Test",
             "platformName": "Windows 11",
             "w3c": True,
