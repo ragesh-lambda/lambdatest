@@ -9,8 +9,8 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import time
-username = "ritamg"
-access_key = "lHWNSA0QECwjeN8DoDb9U6KyXMBgAFXqlIIArkxeOTDSeEdLyG"
+username = "rageshn"
+access_key = "902OMaGaDsNUiTYVS73bU3I8X8Wld6D014LSeUog83xx6bF386"
 
 
 class FirstSampleTest(unittest.TestCase):
