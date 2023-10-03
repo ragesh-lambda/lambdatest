@@ -85,7 +85,7 @@ class FirstSampleTest(unittest.TestCase):
         email = driver.find_element(By.ID, "session_key")
         email.click()
         email_1= driver.find_element(By.ID, "session_key")
-        email_1.send_keys("ritamganguliac@gmail.com")
+        email_1.send_keys("rageshn@lambdatest.com")
         time.sleep(10)
         password= driver.find_element(By.ID, "session_password")
         password.click()
